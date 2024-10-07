@@ -1,0 +1,29 @@
+\section{Introduction}
+The primary purpose of code review is to make sure that the overall code health code base is improving over time.
+Each pull request needs to be reviewed to ensure health is not going down.
+
+
+\section{Actors}
+\subsection{Team lead}
+Most knowledgable member of the team. A technical reference.
+She's a person responsible for writing the rules and agreements required to perform code reviews. Interested in knowing the overall status of the project with things such as complexity, coverage and health.
+
+% Rules would have different levels of priority, given that a failed higher priority would be an error and lower priority would be a warning.
+
+Teams usually have their codebase in the web, that's where they perform their code reviews.
+
+\subsection{Code reviewer}
+Person that is reviewing a piece of code. He needs the agreements and rules to judge the code quality. Languages usually provide libraries to test source code, a code reviewer would likely use them to realize the coverage of the PR.
+
+Once a code review is done, he writes a series of observations to the code that will be used as feedback.
+
+\subsection{Developer}
+The person in charge of implementing requirements. Once he finishes the implementation, he submits his code for code review.
+% Having developers submit their code through the process of code review helps to improve quality because
+
+Pushing code directly to the main branch could break the application, that's why developers submit their work through code review in order to ensure it works and respects the rules and agreements set by the team.
+
+% \subsection{Product manager}
+% A person responsible of a team. She evaluates the performance of a team.
+%
+% She would be interested in reviewing pull requests in order to verify the performance of an enginner.
