@@ -1,0 +1,48 @@
+/'
+    References
+1. https://en.wikipedia.org/wiki/SonarQube
+'/
+@startuml
+package "req [Package] Code review [requirement diagram]" {
+
+    stereotype "Code smells" as code_smells <<Requirement>> {
+    ' https://docs.sonarsource.com/sonarqube/latest/user-guide/rules/built-in-rule-tags/
+    ' https://en.wikipedia.org/wiki/Code_smell
+        overview = A code smell is any characteristic in the source code of a program that possibily indicates a
+        deeper problem.
+
+        Code smells have a negative effect on the manteinability of a program.
+
+        Note: SonarQube has the following built-in rules such as: unused, convention, confusing, bad-practice.
+    }
+
+    stereotype "Code complexity" as complexity <<Requirement>> {
+        ' https://en.wikipedia.org/wiki/Cyclomatic_complexity
+        overview = cyclomatic complexity
+    }
+
+    stereotype "Coverage" as code_coverage <<Requirement>> {
+        overview = Coverage is a report regarding the percentage of code covered by unit tests. A development team usually
+        sets a minimal accepted percentage the codebase should have.
+
+        If the implementation is reducing the codebase coverage, the code reviewer will reject it.
+
+        CS-015 [SP-0]: As a developer, I want to have my code coverage percentage shown when I finish analyzing it so that the developer can have feedback on his code.
+    }
+
+    stereotype "Code reviewing rules" as rules <<Requirement>> {
+        overview = Team lead writes guidelines regarding what should a code implementation follow.
+
+        Rules are guidelines to keep and improve codebase health. They could be: class size, method size, quantity
+        of method parameters, method size, etc.
+
+        [CS-]CS-004 [SP-0] : As a team lead I want to write down rules and agreements in order to set up the guidelines for a code review
+    }
+    rules +-- code_smells
+    rules +-- code_coverage
+    rules +-- complexity
+}
+@enduml
+    stereotype "" as <<Requirement>> {
+        overview =
+    }

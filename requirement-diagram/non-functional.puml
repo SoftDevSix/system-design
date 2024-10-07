@@ -1,0 +1,21 @@
+@startuml
+package "req [Package] Non-functional [requirement diagram]" {
+    stereotype "Performance" as performance <<Requirement>> {
+        overview = For a team to adopt the system it should perform code reviews more faster than traditional
+        methods.
+    }
+
+    stereotype "User interface" as ui <<Requirement>> {
+        overview = An interface to communicate a code reviewer feedback. Analysis like coverage.
+    }
+
+    stereotype "Database" as db <<Requirement>> {
+        overview = The system needs a persitent storage for things like code review rules.
+    }
+
+}
+
+@enduml
+    stereotype "" as <<Requirement>> {
+        overview =
+    }
