@@ -5,7 +5,7 @@ header SysML requirements diagram
 title Argos
 footer Static code analisys
 
-!include feedback.puml
+!include reporting.puml
 !include code-review.puml
 !include non-functional.puml
 
@@ -42,3 +42,4 @@ end legend
     stereotype "" as <<Requirement>> {
         overview =
     }
+

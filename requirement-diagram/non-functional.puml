@@ -13,9 +13,14 @@ package "req [Package] Non-functional [requirement diagram]" {
         overview = The system needs a persitent storage for things like code review rules.
     }
 
+    stereotype "Multi-language support" as multi_language <<Requirement>> {
+        overview = The analyzer will be modular and flexible, allowing future extensions to support additional languages and rules.
+    }
+
 }
 
 @enduml
     stereotype "" as <<Requirement>> {
         overview =
     }
+

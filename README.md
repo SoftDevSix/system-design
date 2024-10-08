@@ -2,5 +2,5 @@
 The design of the overall system implementation
 
 ## Requirements
-!(SysML requirements diagram)[requirement-diagram/build/argos.svg]
+![SysML requirements diagram](requirement-diagram/build/argos.svg)
 
