@@ -21,6 +21,9 @@ dependencies {
 
     // This dependency is used by the application.
     implementation libs.guava
+
+    // https://mvnrepository.com/artifact/fr.inria.gforge.spoon/spoon-core
+    implementation 'fr.inria.gforge.spoon:spoon-core:10.3.0'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
