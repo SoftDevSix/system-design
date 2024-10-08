@@ -1,0 +1,61 @@
+@startuml
+skinparam wrapwidth 200
+skinparam linetype ortho
+
+package "req [Package] Reporting [requirement diagram]" {
+
+    stereotype "Status" as status <<Requirement>> {
+        overview = A developer or team lead are interested to know if the code reviewer has requested more changes or
+        approved the code review.
+    }
+
+    stereotype "Priority levels" as levels <<Requirement>> {
+        overview = While reviewing code, once the code reviewer has identified a infrigment he will categorize it in levels.
+
+        Top level rules infringments would make the reviewer reject the implementation.
+    }
+
+    stereotype "Commentaries" as commentaries <<Requirement>> {
+        overview = The code reviewer ensures code reviewing rules are being followed and writes comment on the specific
+        file and line where a rule is not being followed.
+
+        A file could have commentaries. It should be easy to know from which line is the commentary.
+
+        'CS-005 [SP-0] : As a developer I want to have comments on my PR
+    }
+
+    stereotype "Security reports" as security <<Requirement>> {
+        overview = Detection and reporting of potential security vulnerabilities.
+    }
+
+    stereotype "Performance reports" as performance <<Requirement>> {
+        overview = A performance-oriented report highlighting inefficient code and optimization suggestions.
+    }
+
+    stereotype "Code quality reports" as code_quality <<Requirement>> {
+        overview = A report on code quality with recommendations for improvements
+    }
+
+    stereotype "Commented reports" as commented_reports <<Requirement>> {
+            overview = These are specific reports, they have commentaries per file and per line. They usually are about code quality or security issues.
+    }
+    commented_reports +-- commentaries
+    commented_reports +-- levels
+    commented_reports +-- status
+
+    stereotype "Code review feedback" as feedback <<Requirement>> {
+        overview = Once the code review is finished, the results should be published. Developer and sometimes team lead would review those.
+
+        The developer takes the feedback. He will implement those observatiosn that he agrees with and debate those t  he doesn't.
+    }
+    feedback +-- performance
+    feedback +-- commented_reports
+    feedback +-- code_quality
+    feedback +-- security
+
+}
+@enduml
+    stereotype "" as <<Requirement>> {
+        overview =
+    }
+
