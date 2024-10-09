@@ -4,15 +4,11 @@ The design of the overall system implementation
 
 ### Deep AST analysis: Allows inspection and manipulation of the internal structure of Java code, ideal for static analysis, refactoring and code generation.
 
-### Automated refactoring: Provides advanced tools to refactor code in a safe and automated way, maintaining references and avoiding human errors.
-
 ### Compatibility with multiple Java versions: Supports multiple Java versions, including the latest ones, which facilitates the development and maintenance of old or new projects.
-
-### Full Eclipse integration: Fully integrated into the Eclipse IDE, providing a smooth development experience with tools such as auto-completion, debugging and testing.
 
 ### Extensibility through plugins: An extensible platform that allows developers to add specific functionality through a wide variety of plugins.
 
-### High performance in large projects: Optimized to handle large-scale projects, with efficient analysis and good memory management.
+### Support for enterprise projects: Compatible with enterprise Java technologies such as Java EE, Spring and Maven, facilitating the development of complex applications in corporate environments.
 
 ### Disadvantages
 
