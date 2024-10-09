@@ -8,6 +8,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class SimpleASTExample {
     private static final String PATH = "src/main/java/org/example/sample/Hello.java";
@@ -18,14 +19,17 @@ public class SimpleASTExample {
 
         System.out.println("=============================================================");
 
-        cu.findAll(ClassOrInterfaceDeclaration.class).forEach(className -> {
-            System.out.println("Class name: " + className.getName());
+        List<ClassOrInterfaceDeclaration> classes = cu.findAll(ClassOrInterfaceDeclaration.class);
 
-            className.findAll(MethodDeclaration.class).forEach(methodDeclaration -> {
+        for (ClassOrInterfaceDeclaration classDeclaration : classes) {
+            System.out.println("Class name: " + classDeclaration.getName());
+            List<MethodDeclaration> methods = classDeclaration.findAll(MethodDeclaration.class);
+
+            for (MethodDeclaration methodDeclaration : methods) {
                 System.out.println("Method name: " + methodDeclaration.getName()
                         + " is a " + methodDeclaration.getType() + " method");
-            });
-        });
+            }
+        }
     }
 }
 
