@@ -1,0 +1,367 @@
+CompilationUnit : package org.example;
+
+class Animal {
+
+    public void eat() {
+        System.out.println("I can eat");
+    }
+}
+
+// Dog inherits Animal
+class Dog extends Animal {
+
+    // overriding the eat() method
+    @Override
+    public void eat() {
+        // call method of superclass
+        super.eat();
+        System.out.println("I eat dog food");
+    }
+
+    // new method in subclass
+    public void bark() {
+        System.out.println("I can bark");
+    }
+}
+
+class Cat extends Animal {
+
+    @Override
+    public void eat() {
+        super.eat();
+        System.out.println("I eat cat food");
+    }
+
+    public void miau() {
+        System.out.println("I can maullar");
+    }
+}
+
+class House {
+
+    Animal animal;
+
+    public House(Animal animal) {
+        this.animal = animal;
+    }
+
+    public void Dog() {
+        if (animal instanceof Dog) {
+            ((Dog) animal).bark();
+        } else {
+            System.out.println("There is no Dog");
+        }
+    }
+}
+
+class MainExample {
+
+    public static void main(String[] args) {
+        // create an object of the subclass
+        Dog labrador = new Dog();
+        // call the eat() method
+        labrador.eat();
+        labrador.bark();
+    }
+}
+
+ PackageDeclaration : package org.example;
+
+
+  Name : org.example
+   Name : org
+ ClassOrInterfaceDeclaration : class Animal {
+
+    public void eat() {
+        System.out.println("I can eat");
+    }
+}
+  SimpleName : Animal
+  MethodDeclaration : public void eat() {
+    System.out.println("I can eat");
+}
+   Modifier : public 
+   SimpleName : eat
+   VoidType : void
+   BlockStmt : {
+    System.out.println("I can eat");
+}
+    ExpressionStmt : System.out.println("I can eat");
+     MethodCallExpr : System.out.println("I can eat")
+      FieldAccessExpr : System.out
+       NameExpr : System
+        SimpleName : System
+       SimpleName : out
+      SimpleName : println
+      StringLiteralExpr : "I can eat"
+ ClassOrInterfaceDeclaration : // Dog inherits Animal
+class Dog extends Animal {
+
+    // overriding the eat() method
+    @Override
+    public void eat() {
+        // call method of superclass
+        super.eat();
+        System.out.println("I eat dog food");
+    }
+
+    // new method in subclass
+    public void bark() {
+        System.out.println("I can bark");
+    }
+}
+  SimpleName : Dog
+  MethodDeclaration : // overriding the eat() method
+@Override
+public void eat() {
+    // call method of superclass
+    super.eat();
+    System.out.println("I eat dog food");
+}
+   MarkerAnnotationExpr : @Override
+    Name : Override
+   Modifier : public 
+   SimpleName : eat
+   VoidType : void
+   BlockStmt : {
+    // call method of superclass
+    super.eat();
+    System.out.println("I eat dog food");
+}
+    ExpressionStmt : // call method of superclass
+super.eat();
+     MethodCallExpr : super.eat()
+      SuperExpr : super
+      SimpleName : eat
+    ExpressionStmt : System.out.println("I eat dog food");
+     MethodCallExpr : System.out.println("I eat dog food")
+      FieldAccessExpr : System.out
+       NameExpr : System
+        SimpleName : System
+       SimpleName : out
+      SimpleName : println
+      StringLiteralExpr : "I eat dog food"
+  MethodDeclaration : // new method in subclass
+public void bark() {
+    System.out.println("I can bark");
+}
+   Modifier : public 
+   SimpleName : bark
+   VoidType : void
+   BlockStmt : {
+    System.out.println("I can bark");
+}
+    ExpressionStmt : System.out.println("I can bark");
+     MethodCallExpr : System.out.println("I can bark")
+      FieldAccessExpr : System.out
+       NameExpr : System
+        SimpleName : System
+       SimpleName : out
+      SimpleName : println
+      StringLiteralExpr : "I can bark"
+  ClassOrInterfaceType : Animal
+   SimpleName : Animal
+ ClassOrInterfaceDeclaration : class Cat extends Animal {
+
+    @Override
+    public void eat() {
+        super.eat();
+        System.out.println("I eat cat food");
+    }
+
+    public void miau() {
+        System.out.println("I can maullar");
+    }
+}
+  SimpleName : Cat
+  MethodDeclaration : @Override
+public void eat() {
+    super.eat();
+    System.out.println("I eat cat food");
+}
+   MarkerAnnotationExpr : @Override
+    Name : Override
+   Modifier : public 
+   SimpleName : eat
+   VoidType : void
+   BlockStmt : {
+    super.eat();
+    System.out.println("I eat cat food");
+}
+    ExpressionStmt : super.eat();
+     MethodCallExpr : super.eat()
+      SuperExpr : super
+      SimpleName : eat
+    ExpressionStmt : System.out.println("I eat cat food");
+     MethodCallExpr : System.out.println("I eat cat food")
+      FieldAccessExpr : System.out
+       NameExpr : System
+        SimpleName : System
+       SimpleName : out
+      SimpleName : println
+      StringLiteralExpr : "I eat cat food"
+  MethodDeclaration : public void miau() {
+    System.out.println("I can maullar");
+}
+   Modifier : public 
+   SimpleName : miau
+   VoidType : void
+   BlockStmt : {
+    System.out.println("I can maullar");
+}
+    ExpressionStmt : System.out.println("I can maullar");
+     MethodCallExpr : System.out.println("I can maullar")
+      FieldAccessExpr : System.out
+       NameExpr : System
+        SimpleName : System
+       SimpleName : out
+      SimpleName : println
+      StringLiteralExpr : "I can maullar"
+  ClassOrInterfaceType : Animal
+   SimpleName : Animal
+ ClassOrInterfaceDeclaration : class House {
+
+    Animal animal;
+
+    public House(Animal animal) {
+        this.animal = animal;
+    }
+
+    public void Dog() {
+        if (animal instanceof Dog) {
+            ((Dog) animal).bark();
+        } else {
+            System.out.println("There is no Dog");
+        }
+    }
+}
+  SimpleName : House
+  FieldDeclaration : Animal animal;
+   VariableDeclarator : animal
+    ClassOrInterfaceType : Animal
+     SimpleName : Animal
+    SimpleName : animal
+  ConstructorDeclaration : public House(Animal animal) {
+    this.animal = animal;
+}
+   Modifier : public 
+   SimpleName : House
+   Parameter : Animal animal
+    ClassOrInterfaceType : Animal
+     SimpleName : Animal
+    SimpleName : animal
+   BlockStmt : {
+    this.animal = animal;
+}
+    ExpressionStmt : this.animal = animal;
+     AssignExpr : this.animal = animal
+      FieldAccessExpr : this.animal
+       ThisExpr : this
+       SimpleName : animal
+      NameExpr : animal
+       SimpleName : animal
+  MethodDeclaration : public void Dog() {
+    if (animal instanceof Dog) {
+        ((Dog) animal).bark();
+    } else {
+        System.out.println("There is no Dog");
+    }
+}
+   Modifier : public 
+   SimpleName : Dog
+   VoidType : void
+   BlockStmt : {
+    if (animal instanceof Dog) {
+        ((Dog) animal).bark();
+    } else {
+        System.out.println("There is no Dog");
+    }
+}
+    IfStmt : if (animal instanceof Dog) {
+    ((Dog) animal).bark();
+} else {
+    System.out.println("There is no Dog");
+}
+     InstanceOfExpr : animal instanceof Dog
+      NameExpr : animal
+       SimpleName : animal
+      ClassOrInterfaceType : Dog
+       SimpleName : Dog
+     BlockStmt : {
+    ((Dog) animal).bark();
+}
+      ExpressionStmt : ((Dog) animal).bark();
+       MethodCallExpr : ((Dog) animal).bark()
+        EnclosedExpr : ((Dog) animal)
+         CastExpr : (Dog) animal
+          ClassOrInterfaceType : Dog
+           SimpleName : Dog
+          NameExpr : animal
+           SimpleName : animal
+        SimpleName : bark
+     BlockStmt : {
+    System.out.println("There is no Dog");
+}
+      ExpressionStmt : System.out.println("There is no Dog");
+       MethodCallExpr : System.out.println("There is no Dog")
+        FieldAccessExpr : System.out
+         NameExpr : System
+          SimpleName : System
+         SimpleName : out
+        SimpleName : println
+        StringLiteralExpr : "There is no Dog"
+ ClassOrInterfaceDeclaration : class MainExample {
+
+    public static void main(String[] args) {
+        // create an object of the subclass
+        Dog labrador = new Dog();
+        // call the eat() method
+        labrador.eat();
+        labrador.bark();
+    }
+}
+  SimpleName : MainExample
+  MethodDeclaration : public static void main(String[] args) {
+    // create an object of the subclass
+    Dog labrador = new Dog();
+    // call the eat() method
+    labrador.eat();
+    labrador.bark();
+}
+   Modifier : public 
+   Modifier : static 
+   SimpleName : main
+   Parameter : String[] args
+    ArrayType : String[]
+     ClassOrInterfaceType : String
+      SimpleName : String
+    SimpleName : args
+   VoidType : void
+   BlockStmt : {
+    // create an object of the subclass
+    Dog labrador = new Dog();
+    // call the eat() method
+    labrador.eat();
+    labrador.bark();
+}
+    ExpressionStmt : // create an object of the subclass
+Dog labrador = new Dog();
+     VariableDeclarationExpr : Dog labrador = new Dog()
+      VariableDeclarator : labrador = new Dog()
+       ClassOrInterfaceType : Dog
+        SimpleName : Dog
+       SimpleName : labrador
+       ObjectCreationExpr : new Dog()
+        ClassOrInterfaceType : Dog
+         SimpleName : Dog
+    ExpressionStmt : // call the eat() method
+labrador.eat();
+     MethodCallExpr : labrador.eat()
+      NameExpr : labrador
+       SimpleName : labrador
+      SimpleName : eat
+    ExpressionStmt : labrador.bark();
+     MethodCallExpr : labrador.bark()
+      NameExpr : labrador
+       SimpleName : labrador
+      SimpleName : bark
