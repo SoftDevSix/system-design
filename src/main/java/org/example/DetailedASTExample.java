@@ -98,7 +98,7 @@ public class DetailedASTExample {
      */
     private static void processParameters(MethodDeclaration methodDeclaration) {
         for (Parameter parameter : methodDeclaration.getParameters()) {
-            System.out.println("Parameter: " + parameter.getNameAsString() + " as type " + parameter.getType());
+            System.out.println("\tParameter: " + parameter.getNameAsString() + " as type " + parameter.getType());
         }
     }
 
@@ -113,7 +113,7 @@ public class DetailedASTExample {
         List<VariableDeclarationExpr> variableDeclarations = methodDeclaration.findAll(VariableDeclarationExpr.class);
         for (VariableDeclarationExpr variableDeclarator : variableDeclarations) {
             for (VariableDeclarator var : variableDeclarator.getVariables()) {
-                System.out.println("Variable: " + var.getNameAsString() + " as type " + variableDeclarator.getElementType());
+                System.out.println("\t\tVariable: " + var.getNameAsString() + " as type " + var.getType());
                 declaredVariables.add(var.getNameAsString());
             }
         }
@@ -146,7 +146,7 @@ public class DetailedASTExample {
         if (methodDeclaration.getBody().isPresent()) {
             List<Statement> statements = methodDeclaration.getBody().get().getStatements();
             for (Statement statement : statements) {
-                System.out.println("Sentences: " + statement);
+                System.out.println("\tSentences: " + statement);
             }
         }
     }
