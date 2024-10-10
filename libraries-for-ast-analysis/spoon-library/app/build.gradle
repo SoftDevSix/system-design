@@ -16,14 +16,10 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit test framework.
     testImplementation libs.junit
-
-    // This dependency is used by the application.
     implementation libs.guava
-
-    // https://mvnrepository.com/artifact/fr.inria.gforge.spoon/spoon-core
     implementation 'fr.inria.gforge.spoon:spoon-core:10.3.0'
+    implementation 'fr.inria.gforge.spoon:spoon-decompiler:0.1.0'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
