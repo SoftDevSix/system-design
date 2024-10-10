@@ -1,4 +1,4 @@
-~~# Java Parser Library
+# Java Parser Library
 
 --- 
 The **Java Parsing Library** is a powerful tool that was designed to **parse, manipulate, and generate** Java source code.
