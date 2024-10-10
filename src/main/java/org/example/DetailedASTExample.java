@@ -2,10 +2,12 @@ package org.example;
 
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.expr.VariableDeclarationExpr;
 import com.github.javaparser.ast.stmt.Statement;
@@ -19,6 +21,11 @@ import java.util.Set;
 
 public class DetailedASTExample {
     private static final String PATH = "src/main/java/org/example/sample/Hello.java";
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    private static final String ANSI_BLUE = "\u001B[34m";
 
     /**
      * That is the main entry point of program.
@@ -29,11 +36,34 @@ public class DetailedASTExample {
      */
     public static void main(String[] args) throws IOException {
         CompilationUnit cu = StaticJavaParser.parse(Files.newInputStream(Paths.get(PATH)));
+        detectExternalLibraries(cu);
 
         List<ClassOrInterfaceDeclaration> classes = cu.findAll(ClassOrInterfaceDeclaration.class);
         for (ClassOrInterfaceDeclaration classDeclaration : classes) {
             processClass(classDeclaration);
         }
+    }
+
+    /**
+     * This method detects and shows all external libraries used different to java.
+     * @param cu The CompilationUnit root to analyze the libraries used.
+     */
+    private static void detectExternalLibraries(CompilationUnit cu) {
+        System.out.println(ANSI_BLUE + "═════════════════════════════════════════════════════" + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "External libraries using:" + ANSI_RESET);
+        Set<String> externalLibraries = new HashSet<>();
+
+        for (ImportDeclaration importDecl : cu.getImports()) {
+            String importName = importDecl.getName().asString();
+            if (!importName.startsWith("java.")) {
+                externalLibraries.add(importName);
+            }
+        }
+
+        for (String library : externalLibraries) {
+            System.out.println("\t- " + library);
+        }
+        System.out.println(ANSI_BLUE + "═════════════════════════════════════════════════════" + ANSI_RESET);
     }
 
     /**
@@ -43,8 +73,8 @@ public class DetailedASTExample {
      * @param classDeclaration The ClassOrInterfaceDeclaration object representing the class.
      */
     private static void processClass(ClassOrInterfaceDeclaration classDeclaration) {
-        System.out.println("Class name: " + classDeclaration.getName());
-        System.out.println("=======================================================");
+        System.out.println(ANSI_GREEN + "Class name: " + classDeclaration.getName() + ANSI_RESET);
+        System.out.println(ANSI_BLUE + "═════════════════════════════════════════════════════" + ANSI_RESET);
 
         List<MethodDeclaration> methods = classDeclaration.findAll(MethodDeclaration.class);
         for (MethodDeclaration methodDeclaration : methods) {
@@ -60,9 +90,9 @@ public class DetailedASTExample {
      * @param maxLines          This is the max lines number of lines allowed for the method.
      */
     private static void processMethod(MethodDeclaration methodDeclaration, int maxLines) {
-        System.out.println("Method: " + methodDeclaration.getName() + " is a " + methodDeclaration.getType() + " method");
+        System.out.println(ANSI_YELLOW + "Method name is " + methodDeclaration.getName() + " and type is " + methodDeclaration.getType() + ANSI_RESET);
 
-        processParameters(methodDeclaration);
+        processParameters(methodDeclaration, 4);
 
         Set<String> declaredVariables = processDeclaredVariables(methodDeclaration);
         Set<String> usedVariables = processUsedVariables(methodDeclaration);
@@ -70,8 +100,25 @@ public class DetailedASTExample {
         processStatements(methodDeclaration);
         detectUnusedVariables(declaredVariables, usedVariables);
         checkMethodLineCount(methodDeclaration, maxLines);
+        detectMethodCalls(methodDeclaration);
 
-        System.out.println("=======================================================");
+        System.out.println(ANSI_BLUE + "─────────────────────────────────────────────────────" + ANSI_RESET);
+    }
+
+    /**
+     * This method will detect all methods that is calling in method.
+     * @param methodDeclaration The MethodDeclaration object that is representing the method.
+     */
+    private static void detectMethodCalls(MethodDeclaration methodDeclaration) {
+        List<MethodCallExpr> methodCalls = methodDeclaration.findAll(MethodCallExpr.class);
+        System.out.println(ANSI_GREEN + "\tMethod calls in " + methodDeclaration.getName() + ":" + ANSI_RESET);
+        if (methodCalls.isEmpty()) {
+            System.out.println("\t\t- No methods called here");
+        } else {
+            for (MethodCallExpr call : methodCalls) {
+                System.out.println("\t\t- " + call.getName());
+            }
+        }
     }
 
     /**
@@ -87,7 +134,7 @@ public class DetailedASTExample {
         int lineCount = endLine - startLine;
 
         if (lineCount > maxLines) {
-            System.out.println("Method " + method.getName() + " has " + lineCount + " lines code and limit is: " + maxLines);
+            System.out.println(ANSI_RED + "\t\t-> Method " + method.getName() + " has " + lineCount + " lines of code an the limit os: " + maxLines + ANSI_RESET);
         }
     }
 
@@ -96,9 +143,20 @@ public class DetailedASTExample {
      *
      * @param methodDeclaration The MethodDeclaration object that contain the parameters to process.
      */
-    private static void processParameters(MethodDeclaration methodDeclaration) {
-        for (Parameter parameter : methodDeclaration.getParameters()) {
-            System.out.println("\tParameter: " + parameter.getNameAsString() + " as type " + parameter.getType());
+    private static void processParameters(MethodDeclaration methodDeclaration, int maxParams) {
+        List<Parameter> parameters = methodDeclaration.getParameters();
+        System.out.println(ANSI_GREEN + "\tParameters:" + ANSI_RESET);
+
+        if (parameters.isEmpty()) {
+            System.out.println("\t\t- No parameters in this method");
+        } else {
+            for (Parameter parameter : parameters) {
+                System.out.println("\t\t- " + parameter.getNameAsString() + " of type " + parameter.getType());
+            }
+
+            if (parameters.size() > maxParams) {
+                System.out.println(ANSI_RED + "\t\t-> Method has " + parameters.size() + " parameters an the limit is " + maxParams + ANSI_RESET);
+            }
         }
     }
 
@@ -111,13 +169,18 @@ public class DetailedASTExample {
     private static Set<String> processDeclaredVariables(MethodDeclaration methodDeclaration) {
         Set<String> declaredVariables = new HashSet<>();
         List<VariableDeclarationExpr> variableDeclarations = methodDeclaration.findAll(VariableDeclarationExpr.class);
-        for (VariableDeclarationExpr variableDeclarator : variableDeclarations) {
-            for (VariableDeclarator var : variableDeclarator.getVariables()) {
-                System.out.println("\t\tVariable: " + var.getNameAsString() + " as type " + var.getType());
-                declaredVariables.add(var.getNameAsString());
+
+        System.out.println(ANSI_GREEN + "\tVariables declared:" + ANSI_RESET);
+        if (variableDeclarations.isEmpty()) {
+            System.out.println("\t\t- No variable declared");
+        } else {
+            for (VariableDeclarationExpr variableDeclarator : variableDeclarations) {
+                for (VariableDeclarator var : variableDeclarator.getVariables()) {
+                    System.out.println("\t\t- " + var.getNameAsString() + " such as " + var.getType() + " type");
+                    declaredVariables.add(var.getNameAsString());
+                }
             }
         }
-
         return declaredVariables;
     }
 
@@ -145,8 +208,9 @@ public class DetailedASTExample {
     private static void processStatements(MethodDeclaration methodDeclaration) {
         if (methodDeclaration.getBody().isPresent()) {
             List<Statement> statements = methodDeclaration.getBody().get().getStatements();
+            System.out.println(ANSI_GREEN + "\tStatements:" + ANSI_RESET);
             for (Statement statement : statements) {
-                System.out.println("\tSentences: " + statement);
+                System.out.println("\t\t- " + statement);
             }
         }
     }
@@ -160,7 +224,7 @@ public class DetailedASTExample {
     private static void detectUnusedVariables(Set<String> declaredVariables, Set<String> usedVariables) {
         for (String variable : declaredVariables) {
             if (!usedVariables.contains(variable)) {
-                System.out.println("Warning: Variable '" + variable + "' is declared but never used.");
+                System.out.println(ANSI_YELLOW + "\t\t-> Variable " + variable + " is declared but never used." + ANSI_RESET);
             }
         }
     }

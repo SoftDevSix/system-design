@@ -2,6 +2,7 @@ package org.example;
 
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 
@@ -17,7 +18,7 @@ public class SimpleASTExample {
         CompilationUnit cu = StaticJavaParser.parse(Files.newInputStream(Paths.get(PATH)));
         System.out.println(cu);
 
-        System.out.println("=============================================================");
+        System.out.println("═════════════════════════════════════════════════════");
 
         List<ClassOrInterfaceDeclaration> classes = cu.findAll(ClassOrInterfaceDeclaration.class);
 
@@ -30,6 +31,19 @@ public class SimpleASTExample {
                         + " is a " + methodDeclaration.getType() + " method");
             }
         }
+
+        System.out.println("═════════════════════════════════════════════════════");
+        printAST(cu, 0);
+    }
+
+    private static void printAST(Node node, int level) {
+        for (int i = 0; i < level; i++) {
+            System.out.print(" ");
+        }
+
+        System.out.println(node.getClass().getSimpleName() + " : " + node);
+        for (Node child : node.getChildNodes()) {
+            printAST(child, level + 1);
+        }
     }
 }
-
