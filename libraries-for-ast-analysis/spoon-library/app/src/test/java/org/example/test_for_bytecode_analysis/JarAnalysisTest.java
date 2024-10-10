@@ -36,7 +36,8 @@ public class JarAnalysisTest {
         List<String> expectedClassesFound = new ArrayList<>(List.of(
                 "Main",
                 "StringManipulator",
-                "StringReceiver"
+                "StringReceiver",
+                "IdHandler"
         ));
 
         assertEquals(expectedClassesFound.size(), classesFound.size());
@@ -47,4 +48,5 @@ public class JarAnalysisTest {
         boolean allClassesWereFound = expectedClassesFound.isEmpty();
         assertTrue(allClassesWereFound);
     }
+
 }
