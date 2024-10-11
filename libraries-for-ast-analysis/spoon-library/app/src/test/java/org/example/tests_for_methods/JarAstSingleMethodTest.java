@@ -56,13 +56,11 @@ public class JarMethodAnalysisTest {
         CtTypeReference<Boolean> expectedBooleanType = launcher.getFactory().Type().BOOLEAN_PRIMITIVE;
 
         Assert.assertNotNull(methodFound);
-        if (methodFound != null) {
-            assertEquals(expectedMethodName, methodFound.getSimpleName());
-            assertEquals(expectedVisibility, methodFound.getVisibility().toString());
-            assertEquals(expectedAmountOfParameters, methodFound.getParameters().size());
-            assertTrue(methodFound.getReferencedTypes().contains(expectedStringType));
-            assertTrue(methodFound.getReferencedTypes().contains(expectedBooleanType));
-        }
+        assertEquals(expectedMethodName, methodFound.getSimpleName());
+        assertEquals(expectedVisibility, methodFound.getVisibility().toString());
+        assertEquals(expectedAmountOfParameters, methodFound.getParameters().size());
+        assertTrue(methodFound.getReferencedTypes().contains(expectedStringType));
+        assertTrue(methodFound.getReferencedTypes().contains(expectedBooleanType));
     }
 
     @Test
@@ -72,12 +70,10 @@ public class JarMethodAnalysisTest {
         int expectedAmountOfLines = expectedEndLine - expectedStartLine;
 
         Assert.assertNotNull(methodFound);
-        if (methodFound != null) {
-            assertEquals(expectedStartLine, methodFound.getPosition().getLine());
-            assertEquals(expectedEndLine, methodFound.getPosition().getEndLine());
-            assertEquals(expectedAmountOfLines,
-                    methodFound.getPosition().getEndLine() - methodFound.getPosition().getLine());
-        }
+        assertEquals(expectedStartLine, methodFound.getPosition().getLine());
+        assertEquals(expectedEndLine, methodFound.getPosition().getEndLine());
+        assertEquals(expectedAmountOfLines,
+                methodFound.getPosition().getEndLine() - methodFound.getPosition().getLine());
     }
 
     @Test
@@ -99,12 +95,10 @@ public class JarMethodAnalysisTest {
         CtTypeReference<Boolean> expectedBooleanType = launcher.getFactory().Type().BOOLEAN_PRIMITIVE;
 
         Assert.assertNotNull(methodFound);
-        if (methodFound != null) {
-            assertEquals(expectedAmountOfParameters, methodFound.getParameters().size());
-            for (CtParameter<?> parameter : methodFound.getParameters()) {
-                if (parameter.getSimpleName().equals(defaultParameterName)) {
-                    assertEquals(expectedBooleanType, parameter.getType());
-                }
+        assertEquals(expectedAmountOfParameters, methodFound.getParameters().size());
+        for (CtParameter<?> parameter : methodFound.getParameters()) {
+            if (parameter.getSimpleName().equals(defaultParameterName)) {
+                assertEquals(expectedBooleanType, parameter.getType());
             }
         }
     }
@@ -118,11 +112,9 @@ public class JarMethodAnalysisTest {
         String expectedStatementTwo = "return input.equals(inputToCompare)";
 
         Assert.assertNotNull(methodFound);
-        if (methodFound != null) {
-            CtBlock<?> methodBody = methodFound.getBody();
-            assertEquals(expectedAmountOfStatements, methodBody.getStatements().size());
-            assertEquals(expectedStatementOne, methodBody.getStatement(0).toString());
-            assertEquals(expectedStatementTwo, methodBody.getStatement(1).toString());
-        }
+        CtBlock<?> methodBody = methodFound.getBody();
+        assertEquals(expectedAmountOfStatements, methodBody.getStatements().size());
+        assertEquals(expectedStatementOne, methodBody.getStatement(0).toString());
+        assertEquals(expectedStatementTwo, methodBody.getStatement(1).toString());
     }
 }
