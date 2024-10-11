@@ -60,7 +60,6 @@ public class DecompileAndGenerateAST {
                 }
                 writer.write("\n");
             }
-            System.out.println("AST generado en 'ASTOutput.txt'");
         } catch (IOException e) {
             e.printStackTrace();
         }
