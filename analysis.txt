@@ -22,4 +22,5 @@ Method found: getAge, descriptor: ()I
 Method found: <init>, descriptor: ()V
   Instruction opcode: B1 - return void from method (Instruction: return)
 Method found: main, descriptor: ([Ljava/lang/String;)V
+  Instruction opcode: 59 - duplicate the value on top of the stack (Instruction: dup)
   Instruction opcode: B1 - return void from method (Instruction: return)

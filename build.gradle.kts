@@ -25,11 +25,10 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jacoco:org.jacoco.agent:0.8.12")
-    implementation("org.jacoco:org.jacoco.core:0.8.12")
+    implementation("org.benf:cfr:0.152")
+    implementation("fr.inria.gforge.spoon:spoon-core:10.2.0")
     implementation("org.ow2.asm:asm:9.5")
     implementation("org.ow2.asm:asm-commons:9.5")
-    implementation("org.apache.bcel:bcel:6.6.0") // Agregamos BCEL
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.3")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
 }
@@ -54,13 +53,4 @@ tasks.jar {
             "Main-Class" to "org.example.Main"
         )
     }
-}
-
-// Agregamos una tarea para analizar el JAR usando BCEL
-tasks.register<JavaExec>("analyzeJar") {
-    group = "verification"
-    description = "Analyze JAR file using BCEL"
-    classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("org.example.BCELJarAnalyzer")
-    args = listOf("src/main/resources/TestSonarJava-1.0-SNAPSHOT.jar")
 }

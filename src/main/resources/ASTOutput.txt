@@ -1,0 +1,56 @@
+Type: Main
+Modifiers: [public]
+Methods:
+  - Method: main
+    Return Type: void
+    Modifiers: [public, static]
+Fields:
+
+Type: Cat
+Modifiers: [public]
+Methods:
+  - Method: ShowAge
+    Return Type: void
+    Modifiers: [public]
+  - Method: isSleep
+    Return Type: String
+    Modifiers: [public]
+Fields:
+  - Field: isSleep
+    Type: boolean
+    Modifiers: [private, final]
+
+Type: Dog
+Modifiers: [public]
+Methods:
+  - Method: isHappy
+    Return Type: void
+    Modifiers: [public]
+Fields:
+  - Field: isHappy
+    Type: boolean
+    Modifiers: [private, final]
+
+Type: Pet
+Modifiers: [public]
+Methods:
+  - Method: Eat
+    Return Type: void
+    Modifiers: [public]
+  - Method: ShowAge
+    Return Type: void
+    Modifiers: [public]
+  - Method: getAge
+    Return Type: int
+    Modifiers: [public]
+  - Method: getName
+    Return Type: String
+    Modifiers: [public]
+Fields:
+  - Field: name
+    Type: String
+    Modifiers: [protected]
+  - Field: age
+    Type: int
+    Modifiers: [protected]
+
