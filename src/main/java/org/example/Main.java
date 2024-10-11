@@ -9,7 +9,6 @@ public class Main {
 
         String outputDir = "src/main/resources/decompiled";
         DecompileAndGenerateAST ast = new DecompileAndGenerateAST();
-        ast.decompileJar(jarFilePath, outputDir);
-        ast.generateASTFromSource(outputDir);
+
     }
 }
