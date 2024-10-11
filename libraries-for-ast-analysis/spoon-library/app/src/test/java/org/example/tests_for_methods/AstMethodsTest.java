@@ -40,8 +40,6 @@ public class AstMethodsTest {
         int expectedAmountOfMethods = 6;
 
         assertNotNull(classFound);
-        if (classFound != null) {
-            assertEquals(expectedAmountOfMethods, classFound.getMethods().size());
-        }
+        assertEquals(expectedAmountOfMethods, classFound.getMethods().size());
     }
 }

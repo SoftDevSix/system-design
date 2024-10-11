@@ -54,13 +54,11 @@ public class AstSingleMethodTest {
         CtTypeReference<Boolean> expectedBooleanType = launcher.getFactory().Type().BOOLEAN_PRIMITIVE;
 
         assertNotNull(methodFound);
-        if (methodFound != null) {
-            assertEquals(expectedMethodName, methodFound.getSimpleName());
-            assertEquals(expectedVisibility, methodFound.getVisibility().toString());
-            assertEquals(expectedAmountOfParameters, methodFound.getParameters().size());
-            assertTrue(methodFound.getReferencedTypes().contains(expectedStringType));
-            assertTrue(methodFound.getReferencedTypes().contains(expectedBooleanType));
-        }
+        assertEquals(expectedMethodName, methodFound.getSimpleName());
+        assertEquals(expectedVisibility, methodFound.getVisibility().toString());
+        assertEquals(expectedAmountOfParameters, methodFound.getParameters().size());
+        assertTrue(methodFound.getReferencedTypes().contains(expectedStringType));
+        assertTrue(methodFound.getReferencedTypes().contains(expectedBooleanType));
     }
 
     @Test
@@ -84,10 +82,8 @@ public class AstSingleMethodTest {
         int expectedLine = 28;
 
         assertNotNull(methodFound);
-        if (methodFound != null) {
-            assertEquals(expectedSourceFile, methodFound.getPosition().getFile().getName());
-            assertEquals(expectedLine, methodFound.getPosition().getLine());
-        }
+        assertEquals(expectedSourceFile, methodFound.getPosition().getFile().getName());
+        assertEquals(expectedLine, methodFound.getPosition().getLine());
     }
 
     @Test
@@ -97,12 +93,10 @@ public class AstSingleMethodTest {
         CtTypeReference<Boolean> expectedBooleanType = launcher.getFactory().Type().BOOLEAN_PRIMITIVE;
 
         assertNotNull(methodFound);
-        if (methodFound != null) {
-            assertEquals(expectedAmountOfParameters, methodFound.getParameters().size());
-            for (CtParameter<?> parameter : methodFound.getParameters()) {
-                if (parameter.getSimpleName().equals(defaultParameterName)) {
-                    assertEquals(expectedBooleanType, parameter.getType());
-                }
+        assertEquals(expectedAmountOfParameters, methodFound.getParameters().size());
+        for (CtParameter<?> parameter : methodFound.getParameters()) {
+            if (parameter.getSimpleName().equals(defaultParameterName)) {
+                assertEquals(expectedBooleanType, parameter.getType());
             }
         }
     }
@@ -116,12 +110,10 @@ public class AstSingleMethodTest {
         String expectedStatementTwo = "return input.equals(inputToCompare)";
 
         assertNotNull(methodFound);
-        if (methodFound != null) {
-            CtBlock<?> methodBody = methodFound.getBody();
-            assertEquals(expectedAmountOfStatements, methodBody.getStatements().size());
-            assertEquals(expectedStatementOne, methodBody.getStatement(0).toString());
-            assertEquals(expectedStatementTwo, methodBody.getStatement(1).toString());
-        }
+        CtBlock<?> methodBody = methodFound.getBody();
+        assertEquals(expectedAmountOfStatements, methodBody.getStatements().size());
+        assertEquals(expectedStatementOne, methodBody.getStatement(0).toString());
+        assertEquals(expectedStatementTwo, methodBody.getStatement(1).toString());
     }
 
 }

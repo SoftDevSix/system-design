@@ -1,4 +1,4 @@
-package org.example.test_for_bytecode_analysis;
+package org.example.tests_for_classes;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class JarAnalysisTest {
+public class JarAstClassesTest {
 
     private static final String JAR_PATH = "src/test/resources/jarprj-1.0-SNAPSHOT.jar";
     private static JarLauncher launcher;

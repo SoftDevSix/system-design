@@ -1,4 +1,4 @@
-package org.example.test_for_bytecode_analysis;
+package org.example.tests_for_methods;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class JarMethodAnalysisTest {
+public class JarAstSingleMethodTest {
 
     private static final String JAR_PATH = "src/test/resources/jarprj-1.0-SNAPSHOT.jar";
     private static JarLauncher launcher;
@@ -82,10 +82,8 @@ public class JarMethodAnalysisTest {
         int expectedLine = 30;
 
         Assert.assertNotNull(methodFound);
-        if (methodFound != null) {
-            assertEquals(expectedSourceFile, methodFound.getPosition().getFile().getName());
-            assertEquals(expectedLine, methodFound.getPosition().getLine());
-        }
+        assertEquals(expectedSourceFile, methodFound.getPosition().getFile().getName());
+        assertEquals(expectedLine, methodFound.getPosition().getLine());
     }
 
     @Test

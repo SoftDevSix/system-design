@@ -45,9 +45,7 @@ public class AstSingleClassTest {
         String expectedClassName = "StringManipulator";
 
         assertNotNull(classFound);
-        if (classFound != null) {
-            assertEquals(expectedClassName, classFound.getSimpleName());
-        }
+        assertEquals(expectedClassName, classFound.getSimpleName());
     }
 
     @Test
@@ -55,9 +53,7 @@ public class AstSingleClassTest {
         String expectedSourceFile = "StringManipulator.java";
 
         assertNotNull(classFound);
-        if (classFound != null) {
-            assertEquals(expectedSourceFile, classFound.getPosition().getFile().getName());
-        }
+        assertEquals(expectedSourceFile, classFound.getPosition().getFile().getName());
     }
 
     @Test
@@ -73,15 +69,13 @@ public class AstSingleClassTest {
                         ModifierKind.STATIC));
 
         assertNotNull(classFound);
-        if (classFound != null) {
-            assertEquals(expectedAmountOfFields, classFound.getAllFields().size());
-            classFound.getAllFields().forEach(arg0 -> {
-                if (arg0.getSimpleName().equals(defaultField)) {
-                    assertEquals(expectedDefaultFieldType, arg0.getType());
-                    assertTrue(arg0.getModifiers().containsAll(expectedDeafultFieldModifiers));
-                }
-            });
-        }
+        assertEquals(expectedAmountOfFields, classFound.getAllFields().size());
+        classFound.getAllFields().forEach(arg0 -> {
+            if (arg0.getSimpleName().equals(defaultField)) {
+                assertEquals(expectedDefaultFieldType, arg0.getType());
+                assertTrue(arg0.getModifiers().containsAll(expectedDeafultFieldModifiers));
+            }
+        });
     }
 
 }
