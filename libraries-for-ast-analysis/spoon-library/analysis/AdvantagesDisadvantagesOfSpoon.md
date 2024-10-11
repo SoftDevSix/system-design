@@ -1,16 +1,8 @@
-# Spoon Parsing Library
+# Advantages and Disadvantages of Spoon
 
-#### by Luiggy Mamani Condori
+### by Luiggy Mamani Condori
 
-## What is Spoon?
-
--   Spoon is a Java library that provides a powerful set of tools for analyzing and transforming Java source code at compile-time.
-
--   **It's based on the Launcher class, which serves as an integrated command-line** tool leveraging the JDT-based (Eclipse) builder to parse, process, and manipulate Java programs.
-
--   Spoon allows to analyze Java files, classes, and methods and provides the ability to search for elements like methods by signature, properties, and locations. Additionally, Spoon enables developers to build custom code analyzers by implementing its abstraction for processors (AbstractProcessor), providing flexibility and extensibility in static code analysis.
-
-## Main Features (Advantages):
+## Advantages:
 
 **- File and Directory Analysis from Local Path:**
 Spoon can analyze files or entire directories by taking in local paths as input. This feature allows the examination of complete projects, even an entire maven local project.
@@ -26,6 +18,14 @@ After modifying or just analized the abstract syntax tree (AST), we can print ba
 -   Spoon provides a way to build custom analyzers by implementing AbstractProcessor for different types of elements (classes, methods, etc.).
 
 -   Posibilidad de agregar nuestros propios analizadores de codigo usando su abstraccion de procesadores (AbstractProcessor), for example, an empty catch implementations.
+
+**- Metamodel focused on allowing the developer to focus on code analysis:**
+
+-   Spoon aims to provide developers with a way to query code elements in
+    a single line of code in normal cases. The information that can be queried is that of a well-formed typed AST. For this, we provide the query API, based on the notion of "Filter". Spoon provides developers with an intuitive and concise Java metamodel.
+    abstractions for querying and processing AST elements [Click here for further information](https://inria.hal.science/hal-01078532/document)
+
+![Spoon Metamodel](./analysis_resources/Screenshot1.png)
 
 ## Disadvantages:
 
@@ -44,16 +44,3 @@ After modifying or just analized the abstract syntax tree (AST), we can print ba
 -   Processing classes from plain text, especially when handling multiple classes.
 
 -   The powerful printing and custom processor functionality is only fully available when analyzing code from local files or directories. So, one workaround is to generate temporary files or use virtual file systems, which can then be processed by Spoon’s full capabilities. However, this workaround **could introduce additional performance overhead depending on the complexity of the file creation** and deletion operations.
-
----
-
-### Resources
-
-Official page:
-https://spoon.gforge.inria.fr/first_analysis_processor.html
-
-JavaDocs documentation:
-https://spoon.gforge.inria.fr/mvnsites/spoon-core/apidocs/spoon/Launcher.html
-
-Code examples:
-https://github.com/SpoonLabs/spoon-examples/tree/master/src/main/java/fr/inria/gforge/spoon/analysis
