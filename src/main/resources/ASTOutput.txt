@@ -18,7 +18,7 @@ Methods:
 Fields:
   - Field: isSleep
     Type: boolean
-    Modifiers: [final, private]
+    Modifiers: [private, final]
 
 Type: Dog
 Modifiers: [public]
@@ -29,7 +29,7 @@ Methods:
 Fields:
   - Field: isHappy
     Type: boolean
-    Modifiers: [final, private]
+    Modifiers: [private, final]
 
 Type: Pet
 Modifiers: [public]

@@ -1,1 +1,26 @@
 Method found: <init>, descriptor: (Ljava/lang/String;IZ)V
+  Instruction opcode: B1 - return void from method (Instruction: return)
+Method found: isSleep, descriptor: ()Ljava/lang/String;
+  Instruction opcode: B0 - return a reference from a method (Instruction: areturn)
+Method found: ShowAge, descriptor: ()V
+  Instruction opcode: 06 - load the int value 3 onto the stack (Instruction: iconst_3)
+  Instruction opcode: B1 - return void from method (Instruction: return)
+Method found: <init>, descriptor: (Ljava/lang/String;IZ)V
+  Instruction opcode: B1 - return void from method (Instruction: return)
+Method found: isHappy, descriptor: ()V
+  Instruction opcode: B1 - return void from method (Instruction: return)
+Method found: <init>, descriptor: (Ljava/lang/String;I)V
+  Instruction opcode: B1 - return void from method (Instruction: return)
+Method found: Eat, descriptor: ()V
+  Instruction opcode: B1 - return void from method (Instruction: return)
+Method found: ShowAge, descriptor: ()V
+  Instruction opcode: B1 - return void from method (Instruction: return)
+Method found: getName, descriptor: ()Ljava/lang/String;
+  Instruction opcode: B0 - return a reference from a method (Instruction: areturn)
+Method found: getAge, descriptor: ()I
+  Instruction opcode: AC - return an integer from a method (Instruction: ireturn)
+Method found: <init>, descriptor: ()V
+  Instruction opcode: B1 - return void from method (Instruction: return)
+Method found: main, descriptor: ([Ljava/lang/String;)V
+  Instruction opcode: 59 - duplicate the value on top of the stack (Instruction: dup)
+  Instruction opcode: B1 - return void from method (Instruction: return)

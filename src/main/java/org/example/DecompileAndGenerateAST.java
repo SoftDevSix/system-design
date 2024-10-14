@@ -13,34 +13,21 @@ import java.io.IOException;
 
 public class DecompileAndGenerateAST {
 
-    public static void main(String[] args) {
-        String jarPath = "src/main/resources/TestSonarJava-1.0-SNAPSHOT.jar";
-        String outputDir = "src/main/resources/decompiled";
-        decompileJar(jarPath, outputDir);
-        generateASTFromSource(outputDir);
-    }
-
-    private static void decompileJar(String jarPath, String outputDir) {
-
+   private void decompileJar(String jarPath, String outputDir) {
         File outputDirectory = new File(outputDir);
         if (!outputDirectory.exists()) {
             outputDirectory.mkdirs();
         }
 
-
         String[] cfrArgs = {jarPath, "--outputdir", outputDir};
         Main.main(cfrArgs);
     }
 
-    private static void generateASTFromSource(String sourceDir) {
-
+    private void generateASTFromSource(String sourceDir) {
         Launcher spoonLauncher = new Launcher();
         spoonLauncher.addInputResource(sourceDir);
-
-
         spoonLauncher.buildModel();
         CtModel model = spoonLauncher.getModel();
-
 
         try (FileWriter writer = new FileWriter("src/main/resources/ASTOutput.txt")) {
             for (CtType<?> type : model.getAllTypes()) {
@@ -63,5 +50,9 @@ public class DecompileAndGenerateAST {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void decompileAndGenerate(String jarPath, String outputDir) {
+        decompileJar(jarPath, outputDir);
+        generateASTFromSource(outputDir);
     }
 }
