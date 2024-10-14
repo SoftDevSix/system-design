@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 public class DetailedASTExample {
-    private static final String PATH = "src/main/java/org/example/sample/Hello.java";
+    private static final String PATH = "java-parser-library/src/main/java/org/example/sample/Hello.java";
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_GREEN = "\u001B[32m";

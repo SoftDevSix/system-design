@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class SimpleASTExample {
-    private static final String PATH = "src/main/java/org/example/sample/Hello.java";
+    private static final String PATH = "java-parser-library/src/main/java/org/example/sample/Hello.java";
 
     public static void main(String[] args) throws IOException {
         CompilationUnit cu = StaticJavaParser.parse(Files.newInputStream(Paths.get(PATH)));
