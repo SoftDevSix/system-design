@@ -28,7 +28,8 @@ stereotype "Submit code for review" as code_submission <<Requirement>> {
 code_submission <.. parser: <<deriveReqt>>
 
 stereotype "GitHub integration" as github <<Requirement>> {
-    overview = The system should be easy to use in a "GitHub Actions" pipeline.
+    ' https://docs.github.com/en/actions/guides#create-an-action
+    overview = Create an action that can be included in any Github Actions workflow.
 }
 
 stereotype "Developer platform integration" as integration <<Requirement>> {
