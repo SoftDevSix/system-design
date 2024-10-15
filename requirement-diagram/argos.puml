@@ -1,0 +1,50 @@
+@startuml
+skinparam wrapwidth 200
+skinparam class {
+    BackgroundColor<<Requirement>> #B6FFA1
+}
+
+
+header SysML requirements diagram
+title Argos
+footer Static code analisys
+
+!include reporting.puml
+!include code-review.puml
+!include non-functional.puml
+
+stereotype "File processing" as parser <<Requirement>> {
+    overview = The system should be able to read a file and understand what it says.
+
+    /'
+        A structure to identify a file structure.
+    '/
+}
+
+stereotype "Submit code for review" as code_submission <<Requirement>> {
+    overview = Once a developer has implemented the code, he would like to submit his work for code review. This way
+    he will make sure that the code doesnt decrease the overall health of the codebase.
+}
+code_submission <.. parser: <<deriveReqt>>
+
+stereotype "GitHub integration" as github <<Requirement>> {
+    ' https://docs.github.com/en/actions/guides#create-an-action
+    overview = Create an action that can be included in any Github Actions workflow.
+}
+
+stereotype "Developer platform integration" as integration <<Requirement>> {
+    overview = Developers usually have their codebase in an remote platform. The system should be able to
+    be integrated with those platforms.
+}
+integration +-- github
+
+legend right
+  |= Symbol |= Description |
+  |<b> '(+)--'| Split a complex requirement |
+  |<b> '<..'| Derived requirement |
+end legend
+@enduml
+    stereotype "" as <<Requirement>> {
+        overview =
+    }
+

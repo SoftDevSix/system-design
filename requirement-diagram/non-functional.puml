@@ -1,0 +1,32 @@
+@startuml
+skinparam wrapwidth 200
+skinparam linetype ortho
+skinparam class {
+    BackgroundColor<<Requirement>> #B6FFA1
+}
+
+package "req [Package] Non-functional [requirement diagram]" {
+    stereotype "Performance" as performance <<Requirement>> {
+        overview = For a team to adopt the system it should perform code reviews more faster than traditional
+        methods.
+    }
+
+    stereotype "User interface" as ui <<Requirement>> {
+        overview = An interface to communicate a code reviewer feedback. Analysis like coverage.
+    }
+
+    stereotype "Database" as db <<Requirement>> {
+        overview = The system needs a persitent storage for things like code review rules.
+    }
+
+    stereotype "Multi-language support" as multi_language <<Requirement>> {
+        overview = The analyzer will be modular and flexible, allowing future extensions to support additional languages and rules.
+    }
+
+}
+
+@enduml
+    stereotype "" as <<Requirement>> {
+        overview =
+    }
+
