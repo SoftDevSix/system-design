@@ -1,5 +1,9 @@
 @startuml
 skinparam wrapwidth 200
+skinparam class {
+    BackgroundColor<<Requirement>> #B6FFA1
+}
+
 
 header SysML requirements diagram
 title Argos

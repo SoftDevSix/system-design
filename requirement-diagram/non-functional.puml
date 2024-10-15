@@ -1,4 +1,10 @@
 @startuml
+skinparam wrapwidth 200
+skinparam linetype ortho
+skinparam class {
+    BackgroundColor<<Requirement>> #B6FFA1
+}
+
 package "req [Package] Non-functional [requirement diagram]" {
     stereotype "Performance" as performance <<Requirement>> {
         overview = For a team to adopt the system it should perform code reviews more faster than traditional

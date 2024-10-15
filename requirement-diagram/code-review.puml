@@ -5,6 +5,9 @@
 @startuml
 skinparam wrapwidth 200
 skinparam linetype ortho
+skinparam class {
+    BackgroundColor<<Requirement>> #B6FFA1
+}
 
 package "req [Package] Code review [requirement diagram]" {
 
@@ -49,11 +52,11 @@ package "req [Package] Code review [requirement diagram]" {
         'CS-015 [SP-0]: As a developer, I want to have my code coverage percentage shown when I finish analyzing it so that the developer can have feedback on his code.
     }
 
-    stereotype "Security vulnerabilities" as security <<Requirement>> {
+    stereotype "Security vulnerabilities" as security {
         overview = The system should be able to detect common security vulnerabilities such as: SQL injection, XSS, and weak cryptography.
     }
 
-    stereotype "Performance" as performance <<Requirement>> {
+    stereotype "Performance" as performance {
         overview = Potential performance bottlenecks in the code, such as inefficient data structures or memory leaks.
     }
 

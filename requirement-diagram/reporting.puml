@@ -1,6 +1,9 @@
 @startuml
 skinparam wrapwidth 200
 skinparam linetype ortho
+skinparam class {
+    BackgroundColor<<Requirement>> #B6FFA1
+}
 
 package "req [Package] Reporting [requirement diagram]" {
 
@@ -24,11 +27,11 @@ package "req [Package] Reporting [requirement diagram]" {
         'CS-005 [SP-0] : As a developer I want to have comments on my PR
     }
 
-    stereotype "Security reports" as security <<Requirement>> {
+    stereotype "Security reports" as security {
         overview = Detection and reporting of potential security vulnerabilities.
     }
 
-    stereotype "Performance reports" as performance <<Requirement>> {
+    stereotype "Performance reports" as performance {
         overview = A performance-oriented report highlighting inefficient code and optimization suggestions.
     }
 
