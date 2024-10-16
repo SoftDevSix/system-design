@@ -5,12 +5,12 @@ package eclijava;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.junit.Before;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class ASTAnalyzerTest {
 
@@ -32,15 +32,13 @@ public class ASTAnalyzerTest {
     @Test
     public void testMethodCount() {
         int actualMethodCount = analyzer.getMethodCount();
-
-        assertEquals(1, actualMethodCount);
+        assertEquals(4, actualMethodCount);
     }
 
     @Test
     public void testMethodNames() {
-        List<String> expectedMethodNames = List.of("main");
+        List<String> expectedMethodNames = List.of("main", "sum", "product", "divide");
         List<String> actualMethodNames = analyzer.getMethodNames();
-
         assertEquals(expectedMethodNames.size(), actualMethodNames.size());
         assertTrue(actualMethodNames.containsAll(expectedMethodNames));
     }
@@ -52,5 +50,31 @@ public class ASTAnalyzerTest {
 
         assertEquals(expectedParameters.size(), actualParameters.size());
         assertEquals(expectedParameters, actualParameters);
+    }
+
+    @Test
+    public void testGetMethodParameterCount() {
+        int paramCount = analyzer.getMethodParameterCount("divide");
+        assertEquals(3, paramCount);
+    }
+
+    @Test
+    public void testGetMethodLineCount() {
+        int lineCount = analyzer.getMethodLineCount("divide");
+        assertEquals(9, lineCount);
+    }
+    
+    @Test
+    public void testPrintMethodVariables() {
+        MethodDeclaration method = analyzer.getMethodDeclaration("divide");
+        assertNotNull(method);
+        analyzer.printMethodVariables(method);
+    }
+
+    @Test
+    public void testPrintMethodStatements() {
+        MethodDeclaration method = analyzer.getMethodDeclaration("divide");
+        assertNotNull(method);
+        analyzer.printMethodStatements(method);
     }
 }

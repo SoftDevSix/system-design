@@ -8,7 +8,7 @@ public class App {
         try {
             Path filePath = Paths.get("src/main/java/eclijava/TestClass.java");
             EclipseASTAnalyzer analyzer = new EclipseASTAnalyzer(filePath);
-            analyzer.getClassName();
+            analyzer.printMethodCodeLines();
         } catch (Exception e) {
             e.printStackTrace();
         }
