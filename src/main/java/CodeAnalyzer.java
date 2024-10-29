@@ -17,7 +17,7 @@ public class CodeAnalyzer {
                 int paramCount = ctx.parameterList().parameter().size();
                 if (paramCount > 3) {
                     issues.add(String.format(
-                            "Método '%s' tiene demasiados parámetros: %d",
+                            "Method '%s' has too many parameters: %d",
                             currentMethod, paramCount
                     ));
                 }
@@ -26,7 +26,7 @@ public class CodeAnalyzer {
             int lines = ctx.stop.getLine() - ctx.start.getLine() + 1;
             if (lines > 10) {
                 issues.add(String.format(
-                        "Método '%s' es demasiado largo: %d líneas",
+                        "Method '%s' is too long: %d lines",
                         currentMethod, lines
                 ));
             }
@@ -49,7 +49,7 @@ public class CodeAnalyzer {
 
                 if (count > 2) {
                     issues.add(String.format(
-                            "Método '%s' tiene demasiados IFs: %d",
+                            "Method '%s' has too many IFs: %d",
                             currentMethod, count
                     ));
                 }
@@ -97,9 +97,9 @@ public class CodeAnalyzer {
 
         List<String> issues = visitor.getIssues();
         if (issues.isEmpty()) {
-            System.out.println("No se encontraron problemas en el código.");
+            System.out.println("No problems were found in the code.");
         } else {
-            System.out.println("Problemas encontrados:");
+            System.out.println("Problems founded:");
             for (String issue : issues) {
                 System.out.println("- " + issue);
             }
