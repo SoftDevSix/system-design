@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'antlr'
+}
+
+group = 'com.antlr'
+version = '1.0-SNAPSHOT'
+
+dependencies {
+    antlr 'org.antlr:antlr4:4.7.2'
+    implementation 'org.antlr:antlr4-runtime:4.7.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
