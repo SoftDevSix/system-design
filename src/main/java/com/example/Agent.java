@@ -1,8 +1,8 @@
+package com.example;
 import java.lang.instrument.Instrumentation;
 
 /**
  * Created by Yifan on 10/28/16.
- * instrument 接口可以addTransformer,
  * transform input byte[], output[],
  * asm works inside transformer,
  * TODO the question is how to get # of statement, both covered and uncovered??

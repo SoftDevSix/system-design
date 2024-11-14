@@ -1,9 +1,4 @@
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+package com.example;
 
 /**
  * This class is only used for generating ASM code.

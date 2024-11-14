@@ -1,3 +1,4 @@
+package com.example;
 import org.objectweb.asm.*;
 
 

@@ -1,4 +1,8 @@
-import org.objectweb.asm.*;
+package com.example;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 /**
  * Created by Yifan on 10/29/16.

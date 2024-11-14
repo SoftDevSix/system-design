@@ -1,3 +1,4 @@
+package com.example;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
@@ -15,7 +16,6 @@ import java.util.SortedSet;
 public class CoverageDriver implements ClassFileTransformer {
     /**
      * This class must contain current transforming class's total # of statements.
-     * todo 我们也how to be driven by junti start/end event?
      * IPC uses shared file.
      * This project has a assumption: a single line contains only one statement.
      */
