@@ -1,4 +1,4 @@
-package com.example;
+package org.coverage;
 import java.lang.instrument.Instrumentation;
 
 /**

@@ -1,4 +1,4 @@
-package com.example;
+package org.coverage;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;

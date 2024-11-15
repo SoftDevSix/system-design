@@ -1,4 +1,4 @@
-package com.example;
+package org.coverage;
 /**
  * Created by Yifan on 11/1/16.
  */

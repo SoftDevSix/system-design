@@ -1,5 +1,9 @@
-package com.example;
-import java.util.*;
+package org.coverage;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 class FirstPassInfo {
     // need a method : # of statements map

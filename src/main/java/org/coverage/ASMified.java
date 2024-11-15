@@ -1,4 +1,4 @@
-package com.example;
+package org.coverage;
 
 /**
  * This class is only used for generating ASM code.

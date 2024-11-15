@@ -1,5 +1,8 @@
-package com.example;
-import org.objectweb.asm.*;
+package org.coverage;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 
 /**
@@ -37,7 +40,7 @@ public class InformationCollecter extends ClassVisitor implements Opcodes {
 
         @Override
         public void visitLineNumber(int line, Label start) {
-//            System.out.println(methodName+methodDesc+line);
+           System.out.println(methodName+methodDesc+line);
             myInfo.saveMethodInfo(methodName, methodDesc, line);
             mv.visitLineNumber(line, start);
         }
