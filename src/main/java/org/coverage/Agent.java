@@ -25,8 +25,10 @@ public class Agent {
             @Override
             public void run() {
                 CoverageDriver.printResult();
+                System.out.println("Agent has exited, after printing results");
             }
         });
+        System.out.println("Agent has exited");
     }
 
     public static void main(String[] args) {

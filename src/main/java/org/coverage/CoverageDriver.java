@@ -1,5 +1,6 @@
 package org.coverage;
 
+import java.io.FileOutputStream;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
@@ -18,6 +19,10 @@ public class CoverageDriver implements ClassFileTransformer {
   private static final Map<String, FinalInfo> finalInfo = new HashMap<>();
 
   public static void collect(String className, String methodName, String mDesc, int line) {
+    if (finalInfo.isEmpty()) {
+      return;
+    }
+
     finalInfo.get(className).scnd.saveMethodInfo(methodName, mDesc, line);
   }
 
@@ -59,6 +64,9 @@ public class CoverageDriver implements ClassFileTransformer {
         byte[] ret = passOne(classfileBuffer, info, className);
         finalInfo.put(className, new FinalInfo(info, new SecondPassInfo(className)));
         ret = passTwo(ret, className);
+        FileOutputStream writer = new FileOutputStream("InstrumentedApp.class");
+        writer.write(ret);
+        writer.close();
         return ret;
 
       } catch (Exception e) {
