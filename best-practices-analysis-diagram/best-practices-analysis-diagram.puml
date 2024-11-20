@@ -1,0 +1,118 @@
+@startuml
+package "com.softdevsix.argos.domain" {
+
+    class BestPractices {
+        - Integer id
+        - boolean noHardcodedValues
+        + boolean isNoHardcodedValuesEnabled()
+        + void setNoHardcodedValues(boolean)
+    }
+
+    class ProjectRules {
+        - Integer id
+        - Project project
+        - BestPractices bestPractices
+        - CodeComplexity codeComplexity
+        - CodeQuality codeQuality
+        - CodeSmells codeSmells
+        - CodingStandards codingStandards
+        - Coverage coverage
+        + ProjectRules(Project, BestPractices, ...)
+        + Project getProject()
+        + BestPractices getBestPractices()
+        + Integer getId()
+    }
+
+    class Rules {
+        - BestPractices bestPractices
+        - CodeComplexity codeComplexity
+        - CodeQuality codeQuality
+        - CodeSmells codeSmells
+        - CodingStandards codingStandards
+        - Coverage coverage
+        + void setBestPractices(BestPractices)
+        + BestPractices getBestPractices()
+    }
+
+    class Project {
+        - Integer id
+        - String name
+        + String getName()
+    }
+}
+
+package "com.softdevsix.argos.repository" {
+    interface BestPracticesRepository {
+        + save(BestPractices)
+    }
+
+    interface RulesRepo {
+        + Integer createRule(Rules, Project)
+        + Rules fetchRule(Integer)
+    }
+
+    class RulesRepoImpl {
+        - BestPracticesRepository bestPractices
+        - CodeComplexityRepository codeComplexity
+        - CodeQualityRepository codeQuality
+        - CodeSmellsRepository codeSmells
+        - CodingStandardsRepository codingStandards
+        - CoverageRepository coverage
+        - ProjectRulesRepository projectRulesRepository
+        + createRule(Rules, Project)
+        + fetchRule(Integer)
+    }
+}
+
+package "com.softdevsix.argos.processor" {
+    class ASTProcessor {
+        + void getAST()
+        + void travelAST()
+    }
+}
+
+package "com.softdevsix.argos.Analyzer" {
+    abstract class BestPracticesAnalyzer {
+        + Map<String, int> analyze(String)
+    }
+
+    class BaseAnalyzer extends BestPracticesAnalyzer {
+        + Map<String, int> analyze(String)
+    }
+
+    abstract class AnalyzerDecorator extends BestPracticesAnalyzer {
+        # BestPracticesAnalyzer wrappedAnalyzer
+        + AnalyzerDecorator(BestPracticesAnalyzer)
+        + Map<String, int> analyze(String)
+    }
+
+    class HardCodedValuesDecorator extends AnalyzerDecorator {
+        + Map<String, int> analyze(String)
+    }
+
+    class CodeSmellsDecorator extends AnalyzerDecorator {
+        + Map<String, int> analyze(String)
+    }
+
+    class CoverageDecorator extends AnalyzerDecorator {
+        + Map<String, int> analyze(String)
+    }
+}
+
+' Relationships
+BestPracticesRepository <|-- RulesRepoImpl
+RulesRepo <|.. RulesRepoImpl
+Rules --> BestPractices
+RulesRepoImpl --> ProjectRules
+RulesRepoImpl --> ASTProcessor
+ProjectRules --> BestPractices
+ProjectRules --> Project
+ASTProcessor ..> BestPracticesAnalyzer : "Analyzes"
+BestPracticesAnalyzer ..> BestPractices
+
+BestPracticesAnalyzer <|-- BaseAnalyzer
+BestPracticesAnalyzer <|-- AnalyzerDecorator
+AnalyzerDecorator <|-- HardCodedValuesDecorator
+AnalyzerDecorator <|-- CodeSmellsDecorator
+AnalyzerDecorator <|-- CoverageDecorator
+@enduml
