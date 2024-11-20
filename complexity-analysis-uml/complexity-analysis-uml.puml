@@ -1,0 +1,106 @@
+@startuml "Extended Complexity Analysis Design"
+package "Complexity Analysis" {
+    ' Core Interfaces
+    interface ComplexityMetric<T> <<interface>> {
+        +analyze(): T
+        +getMetricName(): String
+    }
+
+    interface ComplexityAnalyzable<S,E> <<interface>> {
+        +getStatements(): List<Statement<S>>
+        +getExpressions(): List<Expression<E>>
+        +getName(): String
+    }
+
+    interface CyclomaticComplexityAnalyzer<S,E,T> <<interface>> {
+        +calculateComplexityScore(): int
+        +determineComplexityLevel(score: int): ComplexityLevel
+        +isWithinComplexityLimits(score: int): boolean
+    }
+
+    interface NodeAnalyzer<T> <<interface>> {
+        +analyzeNode(node: T): int
+    }
+
+    ' Base Analyzer Implementation
+    abstract class BaseCyclomaticComplexityAnalyzer<S,E> {
+        #target: ComplexityAnalyzable<S,E>
+        #rules: ComplexityRules
+        #statementAnalyzer: NodeAnalyzer<S>
+        #expressionAnalyzer: NodeAnalyzer<E>
+        +analyze(): ComplexityMetricResult
+        #calculateBaseComplexity(): int
+        #{abstract} calculateAdditionalComplexity(): int
+    }
+
+    ' Method Implementation
+    class MethodCyclomaticComplexityAnalyzer<S,E> {
+        +calculateComplexityScore(): int
+        -calculateDetailedScores(): Map
+    }
+
+    ' Analyzers
+    class StatementComplexityAnalyzer {
+        +analyzeNode(statement: StatementContext): int
+    }
+
+    class ExpressionComplexityAnalyzer {
+        +analyzeNode(expression: ExpressionContext): int
+    }
+
+    ' Complexity Targets
+    class MethodComplexityTarget<S,E> {
+        -statements: List<Statement<S>>
+        -expressions: List<Expression<E>>
+        -methodName: String
+        +{static} fromMethodInfo(methodInfo: MethodInfo): MethodComplexityTarget
+    }
+
+    ' Value Objects
+    class ComplexityMetricResult {
+        -elementName: String
+        -complexityScore: int
+        -level: ComplexityLevel
+        -isWithinLimits: boolean
+        -detailedScores: Map
+    }
+
+    class ComplexityRules {
+        -lowComplexityThreshold: int
+        -mediumComplexityThreshold: int
+        -highComplexityThreshold: int
+        -cyclomaticComplexityLimitEnabled: boolean
+        -maxCyclomaticComplexity: int
+    }
+
+    enum ComplexityLevel {
+        LOW
+        MEDIUM
+        HIGH
+        VERY_HIGH
+    }
+
+    ' Relationships
+    ComplexityMetric <|-- CyclomaticComplexityAnalyzer
+    CyclomaticComplexityAnalyzer <|.. BaseCyclomaticComplexityAnalyzer
+    BaseCyclomaticComplexityAnalyzer <|-- MethodCyclomaticComplexityAnalyzer
+    BaseCyclomaticComplexityAnalyzer <|-- ClassCyclomaticComplexityAnalyzer
+    BaseCyclomaticComplexityAnalyzer <|-- ConstructorCyclomaticComplexityAnalyzer
+    
+    NodeAnalyzer <|.. StatementComplexityAnalyzer
+    NodeAnalyzer <|.. ExpressionComplexityAnalyzer
+    ComplexityAnalyzable <|.. MethodComplexityTarget
+    ComplexityAnalyzable <|.. ClassComplexityTarget
+    ComplexityAnalyzable <|.. ConstructorComplexityTarget
+
+    ClassCyclomaticComplexityAnalyzer --> MethodCyclomaticComplexityAnalyzer : uses
+
+    BaseCyclomaticComplexityAnalyzer --> ComplexityRules : uses
+    BaseCyclomaticComplexityAnalyzer --* ComplexityAnalyzable : analyzes
+    BaseCyclomaticComplexityAnalyzer --* NodeAnalyzer : uses
+    BaseCyclomaticComplexityAnalyzer ..> ComplexityMetricResult : produces
+    BaseCyclomaticComplexityAnalyzer ..> ComplexityLevel : uses
+
+    ComplexityMetricResult --> ComplexityLevel : contains
+}
+@enduml
