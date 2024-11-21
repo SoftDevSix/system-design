@@ -1,0 +1,103 @@
+@startuml
+note "Rules.yaml" as File
+
+interface IRulesManagerService {
+    + getRules()
+}
+
+class RulesManagerService implements IRulesManagerService {
+    + List<AnalysisType> getRules()
+}
+
+interface IAnalyzerService {
+    + List<AnalysisResult> analyzeProject()
+}
+
+class AnalyzerService implements IAnalyzerService{
+    - IRulesManagerService rulesManagerService
+    + List<AnalysisResult> analyzeProject()
+}
+
+interface IAnalyzer {
+    + AnalysisResult analyze()
+}
+
+class BestPracticesAnalyzer {
+    + AnalysisResult analyze()
+}
+
+class CodeComplexityAnalyzer {
+    + AnalysisResult analyze()
+}
+
+class CodeSmellsAnalyzer {
+    + AnalysisResult analyze()
+}
+
+class CodingStandardsAnalyzer {
+    + AnalysisResult analyze()
+}
+
+enum AnalysisType {
+    - BestPractices
+    - CodeComplexity
+    - CodeSmells
+    - CodingStandards
+}
+
+class AnalysisResult {
+    - List<AnalysisReport> report
+    - String filePath
+    - AnalysisType analysisType
+    + addReport(AnalysisReport)
+}
+
+class IAnalyzerFactory {
+    + IAnalyzer createAnalyzer()
+}
+
+class BestPracticesFactory {
+    + IAnalyzer createAnalyzer()
+}
+
+class CodeComplexityFactory {
+    + IAnalyzer createAnalyzer()
+}
+
+class CodeSmellsFactory {
+    + IAnalyzer createAnalyzer()
+}
+
+class CodingStandardsFactory {
+    + IAnalyzer createAnalyzer()
+}
+
+class AnalysisReport {
+    - int startLine
+    - int endLine
+    - String message
+}
+
+IAnalyzer <-- BestPracticesAnalyzer
+IAnalyzer <-- CodeComplexityAnalyzer
+IAnalyzer <-- CodeSmellsAnalyzer
+IAnalyzer <-- CodingStandardsAnalyzer
+
+RulesManagerService <.. File
+RulesManagerService <.. File
+
+AnalyzerService --|> IAnalyzerFactory
+
+IAnalyzer -> AnalysisResult
+AnalysisResult -> AnalysisType
+AnalysisType <- RulesManagerService
+IAnalyzerService -> AnalysisResult
+
+IAnalyzerFactory <.. BestPracticesFactory
+IAnalyzerFactory <.. CodeComplexityFactory
+IAnalyzerFactory <.. CodeSmellsFactory
+IAnalyzerFactory <.. CodingStandardsFactory
+
+IAnalyzer --> IAnalyzerFactory
+AnalysisResult --> AnalysisReport
+@enduml
