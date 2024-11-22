@@ -1,106 +1,215 @@
 @startuml "Extended Complexity Analysis Design"
 package "Complexity Analysis" {
-    ' Core Interfaces
-    interface ComplexityMetric<T> <<interface>> {
-        +analyze(): T
-        +getMetricName(): String
-    }
+  ' Core Interfaces
+  interface ComplexityMetric<T> {
+    +analyze(): T
+    +getMetricName(): String
+  }
 
-    interface ComplexityAnalyzable<S,E> <<interface>> {
-        +getStatements(): List<Statement<S>>
-        +getExpressions(): List<Expression<E>>
-        +getName(): String
-    }
+  interface CodeElementAdapter<S,E> {
+    +getStatements(): List<Statement<S>>
+    +getExpressions(): List<Expression<E>>
+    +getName(): String
+  }
 
-    interface CyclomaticComplexityAnalyzer<S,E,T> <<interface>> {
-        +calculateComplexityScore(): int
-        +determineComplexityLevel(score: int): ComplexityLevel
-        +isWithinComplexityLimits(score: int): boolean
-    }
+  interface CyclomaticComplexityAnalyzer<S,E,T> {
+    +calculateComplexityScore(): int
+    +determineComplexityLevel(score: int): ComplexityLevel
+    +isWithinComplexityLimits(score: int): boolean
+  }
 
-    interface NodeAnalyzer<T> <<interface>> {
-        +analyzeNode(node: T): int
-    }
+  interface NodeAnalyzer<T> {
+    +analyzeNode(node: T): int
+    +getComplexityLocation(node: T): ComplexityLocation
+  }
 
-    ' Base Analyzer Implementation
-    abstract class BaseCyclomaticComplexityAnalyzer<S,E> {
-        #target: ComplexityAnalyzable<S,E>
-        #rules: ComplexityRules
-        #statementAnalyzer: NodeAnalyzer<S>
-        #expressionAnalyzer: NodeAnalyzer<E>
-        +analyze(): ComplexityMetricResult
-        #calculateBaseComplexity(): int
-        #{abstract} calculateAdditionalComplexity(): int
-    }
+  ' Rules Management
+  interface ComplexityRulesProvider {
+    +getMaxComplexity(): int
+    +isComplexityLimitEnabled(): boolean
+    +getThresholds(): Map<ComplexityLevel, Integer>
+  }
 
-    ' Method Implementation
-    class MethodCyclomaticComplexityAnalyzer<S,E> {
-        +calculateComplexityScore(): int
-        -calculateDetailedScores(): Map
-    }
-
-    ' Analyzers
-    class StatementComplexityAnalyzer {
-        +analyzeNode(statement: StatementContext): int
-    }
-
-    class ExpressionComplexityAnalyzer {
-        +analyzeNode(expression: ExpressionContext): int
-    }
-
-    ' Complexity Targets
-    class MethodComplexityTarget<S,E> {
-        -statements: List<Statement<S>>
-        -expressions: List<Expression<E>>
-        -methodName: String
-        +{static} fromMethodInfo(methodInfo: MethodInfo): MethodComplexityTarget
-    }
-
-    ' Value Objects
-    class ComplexityMetricResult {
-        -elementName: String
-        -complexityScore: int
-        -level: ComplexityLevel
-        -isWithinLimits: boolean
-        -detailedScores: Map
-    }
-
-    class ComplexityRules {
-        -lowComplexityThreshold: int
-        -mediumComplexityThreshold: int
-        -highComplexityThreshold: int
-        -cyclomaticComplexityLimitEnabled: boolean
-        -maxCyclomaticComplexity: int
-    }
-
-    enum ComplexityLevel {
-        LOW
-        MEDIUM
-        HIGH
-        VERY_HIGH
-    }
-
-    ' Relationships
-    ComplexityMetric <|-- CyclomaticComplexityAnalyzer
-    CyclomaticComplexityAnalyzer <|.. BaseCyclomaticComplexityAnalyzer
-    BaseCyclomaticComplexityAnalyzer <|-- MethodCyclomaticComplexityAnalyzer
-    BaseCyclomaticComplexityAnalyzer <|-- ClassCyclomaticComplexityAnalyzer
-    BaseCyclomaticComplexityAnalyzer <|-- ConstructorCyclomaticComplexityAnalyzer
+  class DefaultComplexityRules {
+    -maxComplexity: int = 10
+    -complexityLimitEnabled: boolean = true
+    -thresholds: Map<ComplexityLevel, Integer>
     
-    NodeAnalyzer <|.. StatementComplexityAnalyzer
-    NodeAnalyzer <|.. ExpressionComplexityAnalyzer
-    ComplexityAnalyzable <|.. MethodComplexityTarget
-    ComplexityAnalyzable <|.. ClassComplexityTarget
-    ComplexityAnalyzable <|.. ConstructorComplexityTarget
+    +getMaxComplexity(): int
+    +isComplexityLimitEnabled(): boolean
+    +getThresholds(): Map<ComplexityLevel, Integer>
+  }
 
-    ClassCyclomaticComplexityAnalyzer --> MethodCyclomaticComplexityAnalyzer : uses
+  class ExternalComplexityRulesAdapter {
+    -source: CodeComplexity
+    +getMaxComplexity(): int
+    +isComplexityLimitEnabled(): boolean
+    +getThresholds(): Map<ComplexityLevel, Integer>
+  }
 
-    BaseCyclomaticComplexityAnalyzer --> ComplexityRules : uses
-    BaseCyclomaticComplexityAnalyzer --* ComplexityAnalyzable : analyzes
-    BaseCyclomaticComplexityAnalyzer --* NodeAnalyzer : uses
-    BaseCyclomaticComplexityAnalyzer ..> ComplexityMetricResult : produces
-    BaseCyclomaticComplexityAnalyzer ..> ComplexityLevel : uses
+  class ComplexityRulesManager {
+    -rulesProvider: ComplexityRulesProvider
+    
+    +setRulesProvider(provider: ComplexityRulesProvider)
+    +getMaxComplexity(): int
+    +isComplexityLimitEnabled(): boolean
+    +determineLevel(score: int): ComplexityLevel
+  }
 
-    ComplexityMetricResult --> ComplexityLevel : contains
+  ' Domain Entity (External)
+  class CodeComplexity <<Entity>> {
+    -id: Integer
+    -cyclomaticComplexityLimit: boolean
+    -maxCyclomaticComplexity: int
+    +isCyclomaticComplexityLimitEnabled(): boolean
+    +getMaxCyclomaticComplexity(): int
+  }
+
+  ' Implementations
+  class MethodCyclomaticComplexityAnalyzer<S,E> {
+    -target: CodeElementAdapter<S,E>
+    -rulesManager: ComplexityRulesManager
+    -statementAnalyzer: NodeAnalyzer<S>
+    -expressionAnalyzer: NodeAnalyzer<E>
+    +analyze(): ComplexityResult
+    -calculateMethodComplexity(): int
+  }
+
+  class ConstructorCyclomaticComplexityAnalyzer<S,E> {
+    -target: CodeElementAdapter<S,E>
+    -rulesManager: ComplexityRulesManager
+    -statementAnalyzer: NodeAnalyzer<S>
+    -expressionAnalyzer: NodeAnalyzer<E>
+    +analyze(): ComplexityResult
+    -calculateConstructorComplexity(): int
+  }
+
+  class ClassCyclomaticComplexityAnalyzer<S,E> {
+    -methodAnalyzer: MethodCyclomaticComplexityAnalyzer<S,E>
+    -constructorAnalyzer: ConstructorCyclomaticComplexityAnalyzer<S,E>
+    -rulesManager: ComplexityRulesManager
+    +analyze(): ComplexityResult
+    -calculateClassComplexity(): int
+  }
+
+  ' Adapters
+  class MethodAdapter {
+    -methodInfo: MethodInformation
+    +getStatements(): List<Statement<S>>
+    +getExpressions(): List<Expression<E>>
+    +getName(): String
+  }
+
+  class ConstructorAdapter {
+    -constructorInfo: ConstructorInformation
+    +getStatements(): List<Statement<S>>
+    +getExpressions(): List<Expression<E>>
+    +getName(): String
+  }
+
+  class ClassAdapter {
+    -classInfo: ClassInformation
+    +getMembers(): ClassMembers
+    +getName(): String
+  }
+
+  ' Analyzers
+  class StatementComplexityAnalyzer {
+    +analyzeNode(statement: StatementContext): int
+    +getComplexityLocation(node: StatementContext): ComplexityLocation
+    -analyzeIfStatement(stmt: StatementContext): int
+    -analyzeSwitchStatement(stmt: StatementContext): int
+    -analyzeLoopStatement(stmt: StatementContext): int
+    -analyzeTryStatement(stmt: StatementContext): int
+  }
+
+  class ExpressionComplexityAnalyzer {
+    +analyzeNode(expression: ExpressionContext): int
+    +getComplexityLocation(node: ExpressionContext): ComplexityLocation
+    -analyzeLogicalOperators(expr: ExpressionContext): int
+  }
+
+  ' Value Objects
+  class ComplexityResult {
+    -elementName: String
+    -complexityScore: int
+    -level: ComplexityLevel
+    -isWithinLimits: boolean
+    -complexityLocations: List<ComplexityLocation>
+  }
+
+  class ComplexityLocation {
+    -lineNumber: int
+    -complexityType: ComplexityType
+    -description: String
+    -nodeType: String
+  }
+
+  enum ComplexityLevel {
+    LOW
+    MEDIUM
+    HIGH
+    VERY_HIGH
+  }
+
+  enum ComplexityType {
+    IF_STATEMENT
+    SWITCH_CASE
+    LOOP
+    LOGICAL_AND
+    LOGICAL_OR
+    CATCH_BLOCK
+    INHERITANCE
+    INTERFACE
+  }
+
+  ' External Models
+  class MethodInformation
+  class ConstructorInformation
+  class ClassInformation
+  class ClassMembers
+
+  ' Relationships
+  ComplexityMetric <|-- CyclomaticComplexityAnalyzer
+  CyclomaticComplexityAnalyzer <|.. MethodCyclomaticComplexityAnalyzer
+  CyclomaticComplexityAnalyzer <|.. ConstructorCyclomaticComplexityAnalyzer
+  CyclomaticComplexityAnalyzer <|.. ClassCyclomaticComplexityAnalyzer
+
+  NodeAnalyzer <|.. StatementComplexityAnalyzer
+  NodeAnalyzer <|.. ExpressionComplexityAnalyzer
+
+  CodeElementAdapter <|.. MethodAdapter
+  CodeElementAdapter <|.. ConstructorAdapter
+  CodeElementAdapter <|.. ClassAdapter
+
+  ' Rules Relationships
+  ComplexityRulesProvider <|.. DefaultComplexityRules
+  ComplexityRulesProvider <|.. ExternalComplexityRulesAdapter
+  ComplexityRulesManager --> ComplexityRulesProvider : uses
+  ExternalComplexityRulesAdapter ..> CodeComplexity : adapts
+
+  ' Analyzer Dependencies
+  MethodCyclomaticComplexityAnalyzer --> ComplexityRulesManager : uses
+  MethodCyclomaticComplexityAnalyzer --> NodeAnalyzer : uses
+  MethodCyclomaticComplexityAnalyzer --> CodeElementAdapter : analyzes
+
+  ConstructorCyclomaticComplexityAnalyzer --> ComplexityRulesManager : uses
+  ConstructorCyclomaticComplexityAnalyzer --> NodeAnalyzer : uses
+  ConstructorCyclomaticComplexityAnalyzer --> CodeElementAdapter : analyzes
+
+  ClassCyclomaticComplexityAnalyzer --> ComplexityRulesManager : uses
+  ClassCyclomaticComplexityAnalyzer --> MethodCyclomaticComplexityAnalyzer : uses
+  ClassCyclomaticComplexityAnalyzer --> ConstructorCyclomaticComplexityAnalyzer : uses
+
+  ' Result Relationships
+  ComplexityResult --> ComplexityLevel : uses
+  ComplexityResult --> ComplexityLocation : contains
+  ComplexityLocation --> ComplexityType : uses
+
+  ' Adapter Relationships
+  MethodAdapter ..> MethodInformation : adapts
+  ConstructorAdapter ..> ConstructorInformation : adapts
+  ClassAdapter ..> ClassInformation : adapts
+  ClassAdapter --> ClassMembers : uses
 }
 @enduml
