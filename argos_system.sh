@@ -29,12 +29,22 @@ up() {
 down() {
   log "Stopping and deleting containers..."
   docker-compose -f $DOCKER_COMPOSE_FILE down --remove-orphans || error "Error when stopping containers."
-  log "Containers successfully stopped."
+
+  orphan_containers=$(docker ps -q --filter "network=system-design_default")
+  if [ ! -z "$orphan_containers" ]; then
+    docker stop $orphan_containers || error "Error stopping orphan containers."
+    docker rm $orphan_containers || error "Error removing orphan containers."
+  fi
+
+  log "Deleting unused networks..."
+  docker network prune -f || error "Error pruning networks."
+
+  log "Containers and networks successfully stopped."
 }
 
 clean() {
-  log "Removing old containers, images, and volumes..."
-  docker system prune -f || error "Error during cleaning."
+  log "Removing all running containers..."
+  docker rm -f $(docker ps -q) || error "Error removing running containers."
   log "Cleaning completed."
 }
 
