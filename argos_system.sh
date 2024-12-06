@@ -46,7 +46,6 @@ update_container() {
 
   log "Updating container: $container_name..."
 
-  # Extraer la imagen asociada al contenedor desde el archivo docker-compose
   image_name=$(grep -A 1 "$container_name:" "$DOCKER_COMPOSE_FILE" | grep "image:" | awk '{print $2}')
 
   if [ -z "$image_name" ]; then
