@@ -1,0 +1,37 @@
+services:
+  argos_file_manager_prod:
+    image: argoscs/filemanager:latest
+    container_name: argos_file_manager_prod
+    ports:
+      - "8080:8080"
+    profiles:
+      - production
+    environment:
+      - AWS_REGION=${PROD_AWS_REGION}
+      - AWS_ACCESS_KEY_ID=${PROD_AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${PROD_AWS_SECRET_ACCESS_KEY}
+      - AWS_BUCKET_NAME=${PROD_AWS_BUCKET_NAME}
+    env_file:
+      - .env
+
+  argos_ui_prod:
+    image: argoscs/ui:latest
+    ports:
+      - "5173:80"
+    profiles:
+      - production
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - VITE_FILE_MANAGER_API_BASE_URL=${VITE_FILE_MANAGER_API_BASE_URL}
+      - VITE_ARGOS_API_BASE_URL=${VITE_ARGOS_API_BASE_URL}
+    env_file:
+      - .env
+
+  argos_api_app_prod:
+    image: argoscs/api:latest
+    ports:
+      - "8081:8081"
+    profiles:
+      - production
