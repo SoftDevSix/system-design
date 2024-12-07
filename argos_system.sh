@@ -21,14 +21,14 @@ fi
 
 up() {
   log "Lifting containers with $DOCKER_COMPOSE_FILE..."
-  docker-compose -f $DOCKER_COMPOSE_FILE pull || error "Error when obtaining images."
-  docker-compose -f $DOCKER_COMPOSE_FILE --profile production up -d --build || error "Error when lifting the containers."
+  docker compose -f $DOCKER_COMPOSE_FILE pull || error "Error when obtaining images."
+  docker compose -f $DOCKER_COMPOSE_FILE --profile production up -d --build || error "Error when lifting the containers."
   log "Containers successfully lifted."
 }
 
 down() {
   log "Stopping and deleting containers..."
-  docker-compose -f $DOCKER_COMPOSE_FILE down --remove-orphans || error "Error when stopping containers."
+  docker compose -f $DOCKER_COMPOSE_FILE down --remove-orphans || error "Error when stopping containers."
 
   orphan_containers=$(docker ps -q --filter "network=system-design_default")
   if [ ! -z "$orphan_containers" ]; then
@@ -66,10 +66,11 @@ update_container() {
   docker pull $image_name || error "Error pulling the image for $container_name."
 
   log "Recreating the container $container_name..."
-  docker-compose -f $DOCKER_COMPOSE_FILE up -d --no-deps --build $container_name || error "Error recreating the container $container_name."
+  docker compose -f $DOCKER_COMPOSE_FILE up -d --no-deps --build $container_name || error "Error recreating the container $container_name."
 
   log "Container $container_name updated successfully."
 }
+
 
 info() {
   log "Fetching system information..."
