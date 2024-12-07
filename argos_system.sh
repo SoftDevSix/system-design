@@ -15,8 +15,12 @@ if ! command -v docker &> /dev/null; then
   error "Docker is not installed. Please install it first."
 fi
 
-if ! command -v docker-compose &> /dev/null; then
+if ! command -v docker compose &> /dev/null; then
   error "Docker Compose is not installed. Please install it first."
+fi
+
+if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
+  error "The file $DOCKER_COMPOSE_FILE does not exist. Please check the environment."
 fi
 
 up() {
